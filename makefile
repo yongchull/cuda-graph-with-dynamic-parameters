@@ -18,8 +18,12 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 CUDA_HOME ?= /usr/local/cuda
+ARCH = 86
 
 all: graph.x
 
 graph.x: graph.cu gpu_graph.hpp gpu_graph.cpp cuda_helper.hpp
-	$(CUDA_HOME)/bin/nvcc -g -lineinfo -gencode arch=compute_70,code=sm_70 graph.cu gpu_graph.cpp -o graph.x -I$(CUDA_HOME)/include -L$(CUDA_HOME)/lib64 -lcudart
+	$(CUDA_HOME)/bin/nvcc -g -lineinfo -gencode arch=compute_$(ARCH),code=sm_$(ARCH) graph.cu gpu_graph.cpp -o graph.x -I$(CUDA_HOME)/include -L$(CUDA_HOME)/lib64 -lcudart
+
+clean:
+	rm *.x
